@@ -64,6 +64,9 @@ export type ExperienceItem = {
   url?: string;
   bullets: string[];
   technologies: string[];
+  /** Path under public/, e.g. /images/work/scalyx.png */
+  image?: string;
+  imageAlt?: string;
 };
 
 export const experience: ExperienceItem[] = [
@@ -92,6 +95,8 @@ export const experience: ExperienceItem[] = [
       "GCP",
       "LLM APIs",
     ],
+    image: "/images/work/scalyx.png",
+    imageAlt: "Scalyx retail operations platform marketing site",
   },
   {
     title: "Senior Web Developer",
@@ -114,6 +119,8 @@ export const experience: ExperienceItem[] = [
       "Kubernetes",
       "GCP",
     ],
+    image: "/images/work/seidat.png",
+    imageAlt: "Seidat sales and presentation platform for hospitality",
   },
   {
     title: "Technical Lead & Full-Stack Engineer",
@@ -132,6 +139,8 @@ export const experience: ExperienceItem[] = [
       "Docker",
       "WordPress",
     ],
+    image: "/images/work/americabuild.png",
+    imageAlt: "America Build AI-powered permitting and plan review platform",
   },
   {
     title: "Director of Technology",
@@ -151,6 +160,8 @@ export const experience: ExperienceItem[] = [
       "AWS",
       "Tailwind CSS",
     ],
+    image: "/images/work/hardscape.png",
+    imageAlt: "J&D Landscaping hardscape services website",
   },
   {
     title: "Lead Developer",
@@ -162,6 +173,8 @@ export const experience: ExperienceItem[] = [
       "Grew the engineering team from 0 to 5 and coordinated delivery with offshore contributors on products such as ForecourtEye.",
     ],
     technologies: ["C#", "ASP.NET", "Angular", "Azure", "SQL Server"],
+    image: "/images/work/intelico.png",
+    imageAlt: "Intelico security and asset management platform",
   },
 ];
 
@@ -174,6 +187,8 @@ export type ProjectItem = {
   sourcePrivate?: boolean;
   builtWith: string[];
   highlight?: boolean;
+  image?: string;
+  imageAlt?: string;
 };
 
 export const projects: ProjectItem[] = [
@@ -192,6 +207,8 @@ export const projects: ProjectItem[] = [
       "CMS",
     ],
     highlight: true,
+    image: "/images/projects/sophiafiori.png",
+    imageAlt: "Sophia Fiori luxury fine jewelry e-commerce storefront",
   },
   {
     name: "ARTEX",
@@ -201,9 +218,11 @@ export const projects: ProjectItem[] = [
     github: "https://github.com/shingo-katashi/artex",
     builtWith: ["Go", "Next.js", "LLM agents", "Graph visualization"],
     highlight: true,
+    image: "/images/projects/artex.png",
+    imageAlt: "ARTEX autonomous security testing dashboard",
   },
   {
-    name: "Telegram Web",
+    name: "Telegram Account Manager",
     description:
       "Web control plane for large-scale Telegram operations—manage hundreds of accounts from one place and run Telegram’s native capabilities through automation (messaging, sessions, and account workflows). Python backend with a Next.js management UI.",
     sourcePrivate: true,
@@ -214,6 +233,8 @@ export const projects: ProjectItem[] = [
       "Multi-account automation",
     ],
     highlight: true,
+    image: "/images/projects/telegram_web.png",
+    imageAlt: "Telegram Account Manager multi-account management console",
   },
   {
     name: "Seidat Sales Platform",
@@ -222,6 +243,8 @@ export const projects: ProjectItem[] = [
     url: "https://app.seidat.com",
     builtWith: ["Meteor", "React", "MongoDB", "Nx monorepo", "GCP"],
     highlight: true,
+    image: "/images/projects/seidat.png",
+    imageAlt: "Seidat app sales-flow and presentation workspace",
   },
   {
     name: "Offline Candlestick Trainer",
@@ -230,6 +253,8 @@ export const projects: ProjectItem[] = [
     github: "https://github.com/shingo-katashi/tradingapp",
     builtWith: ["FastAPI", "React", "Vite", "SQLite", "Financial data"],
     highlight: true,
+    image: "/images/projects/offline_candlestick_trainer.png",
+    imageAlt: "Offline candlestick chart training application",
   },
   {
     name: "AgentGPT",
@@ -238,6 +263,8 @@ export const projects: ProjectItem[] = [
     github: "https://github.com/shingo-katashi/AgentGPT",
     builtWith: ["TypeScript", "Autonomous agents", "Browser runtime"],
     highlight: true,
+    image: "/images/projects/agentgpt.png",
+    imageAlt: "AgentGPT autonomous AI agent web interface",
   },
   {
     name: "Research AI",
@@ -246,6 +273,8 @@ export const projects: ProjectItem[] = [
     github: "https://github.com/shingo-katashi/research-ai",
     builtWith: ["Python", "Web search", "Report generation"],
     highlight: false,
+    image: "/images/projects/research_ai.png",
+    imageAlt: "Research AI web search and report generation interface",
   },
   {
     name: "Local RAG Chatbot",
@@ -254,6 +283,8 @@ export const projects: ProjectItem[] = [
     github: "https://github.com/shingo-katashi/RAG-chatbot-local",
     builtWith: ["Python", "Local LLMs", "Embeddings"],
     highlight: false,
+    image: "/images/projects/RAG_chatbot.png",
+    imageAlt: "Local RAG chatbot document Q&A interface",
   },
   {
     name: "Intelico One",
@@ -262,6 +293,8 @@ export const projects: ProjectItem[] = [
     url: "https://one.intelico.com",
     builtWith: ["C#", "ASP.NET", "Angular", "Azure"],
     highlight: false,
+    image: "/images/projects/intelico_project.png",
+    imageAlt: "Intelico One security asset management admin",
   },
   {
     name: "HawkAyes NFT Marketplace",
@@ -270,6 +303,8 @@ export const projects: ProjectItem[] = [
     url: "https://www.hawkayes.com",
     builtWith: ["Solidity", "Web3.js", "BSC"],
     highlight: false,
+    image: "/images/projects/hawkayes.png",
+    imageAlt: "HawkAyes enlightenment NFT collection landing page",
   },
 ];
 

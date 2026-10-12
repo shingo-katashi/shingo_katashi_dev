@@ -1,4 +1,5 @@
 import { SectionHeading } from "@/components/SectionHeading";
+import { ContentPreviewImage } from "@/components/ContentPreviewImage";
 import { experience } from "@/content/site";
 import { IconExternal } from "@/components/icons";
 
@@ -44,6 +45,15 @@ export function ExperienceSection() {
               </h3>
               {job.location ? (
                 <p className="mt-1 text-sm text-slate-500">{job.location}</p>
+              ) : null}
+              {job.image && job.imageAlt ? (
+                <div className="mt-4 overflow-hidden rounded-lg border border-slate-800/80 ring-1 ring-white/5">
+                  <ContentPreviewImage
+                    src={job.image}
+                    alt={job.imageAlt}
+                    aspect="16/10"
+                  />
+                </div>
               ) : null}
               <ul className="mt-4 space-y-2.5 text-sm leading-relaxed text-slate-400 sm:text-[0.9375rem]">
                 {job.bullets.map((b) => (

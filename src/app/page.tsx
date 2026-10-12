@@ -21,7 +21,7 @@ export default function Home() {
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-8 lg:px-10 xl:max-w-7xl xl:px-12">
         <div className="lg:flex lg:items-start lg:gap-12 xl:gap-16">
           <DesktopAside />
-          <main className="min-w-0 flex-1 pb-16 pt-8 lg:max-w-2xl lg:pt-10 lg:pb-16 xl:max-w-[42rem] xl:pt-12">
+          <main className="min-w-0 flex-1 pb-16 pt-8 lg:max-w-2xl lg:pt-10 lg:pb-16 xl:max-w-[48rem] xl:pt-12">
             <AboutSection />
             <SkillsSection />
             <ExperienceSection />

@@ -1,4 +1,5 @@
 import { SectionHeading } from "@/components/SectionHeading";
+import { ContentPreviewImage } from "@/components/ContentPreviewImage";
 import { ProjectSourceLink } from "@/components/ProjectSourceLink";
 import { projects, site, type ProjectItem } from "@/content/site";
 import { IconExternal } from "@/components/icons";
@@ -34,6 +35,71 @@ function ProjectTitle({ project }: { project: ProjectItem }) {
   return <>{project.name}</>;
 }
 
+function ProjectCard({
+  project,
+  headingLevel = "h3",
+  priorityImage = false,
+}: {
+  project: ProjectItem;
+  headingLevel?: "h3" | "h4";
+  priorityImage?: boolean;
+}) {
+  const TitleTag = headingLevel;
+  const hasImage = Boolean(project.image && project.imageAlt);
+
+  return (
+    <article
+      className={
+        hasImage
+          ? "group flex h-full flex-col overflow-hidden rounded-xl border border-slate-800/60 bg-slate-900/20 transition hover:border-slate-700/80 hover:bg-slate-900/40"
+          : "group rounded-xl border border-slate-800/60 bg-slate-900/20 p-5 transition hover:border-slate-700/80 hover:bg-slate-900/40 sm:p-6"
+      }
+    >
+      {hasImage ? (
+        <ContentPreviewImage
+          src={project.image!}
+          alt={project.imageAlt!}
+          variant="card"
+          priority={priorityImage}
+          className="border-b border-slate-800/60"
+        />
+      ) : null}
+      <div className={hasImage ? "flex flex-1 flex-col p-5 sm:p-6" : ""}>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+          <TitleTag
+            className={
+              headingLevel === "h3"
+                ? "text-base font-semibold text-slate-100 sm:text-lg"
+                : "font-medium text-slate-200"
+            }
+          >
+            <ProjectTitle project={project} />
+          </TitleTag>
+          <ProjectSourceLink project={project} />
+        </div>
+        <p
+          className={
+            headingLevel === "h3"
+              ? "mt-3 text-sm leading-relaxed text-slate-400 sm:text-[0.9375rem]"
+              : "mt-2 text-sm leading-relaxed text-slate-400"
+          }
+        >
+          {project.description}
+        </p>
+        <p
+          className={
+            headingLevel === "h3"
+              ? "mt-4 font-mono text-[0.6875rem] leading-relaxed text-slate-500 sm:mt-auto sm:pt-4 sm:text-xs"
+              : "mt-2 font-mono text-xs text-slate-500"
+          }
+        >
+          {project.builtWith.join(" · ")}
+        </p>
+      </div>
+    </article>
+  );
+}
+
 export function ProjectsSection() {
   const featured = projects.filter((p) => p.highlight);
   const other = projects.filter((p) => !p.highlight);
@@ -47,24 +113,13 @@ export function ProjectsSection() {
       <SectionHeading id="projects-heading" index="03.">
         Projects
       </SectionHeading>
-      <ul className="space-y-4">
-        {featured.map((project) => (
-          <li
-            key={project.name}
-            className="group rounded-xl border border-slate-800/60 bg-slate-900/20 p-5 transition hover:border-slate-700/80 hover:bg-slate-900/40 sm:p-6"
-          >
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-              <h3 className="text-base font-semibold text-slate-100 sm:text-lg">
-                <ProjectTitle project={project} />
-              </h3>
-              <ProjectSourceLink project={project} />
-            </div>
-            <p className="mt-3 text-sm leading-relaxed text-slate-400 sm:text-[0.9375rem]">
-              {project.description}
-            </p>
-            <p className="mt-4 font-mono text-[0.6875rem] leading-relaxed text-slate-500 sm:text-xs">
-              {project.builtWith.join(" · ")}
-            </p>
+      <ul className="grid gap-5 sm:grid-cols-2">
+        {featured.map((project, index) => (
+          <li key={project.name} className="min-w-0">
+            <ProjectCard
+              project={project}
+              priorityImage={index < 2}
+            />
           </li>
         ))}
       </ul>
@@ -77,20 +132,9 @@ export function ProjectsSection() {
             {other.map((project) => (
               <li
                 key={project.name}
-                className="group border-t border-slate-800/80 pt-6 first:border-0 first:pt-0"
+                className="border-t border-slate-800/80 pt-6 first:border-0 first:pt-0"
               >
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-                  <h4 className="font-medium text-slate-200">
-                    <ProjectTitle project={project} />
-                  </h4>
-                  <ProjectSourceLink project={project} />
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  {project.description}
-                </p>
-                <p className="mt-2 font-mono text-xs text-slate-500">
-                  {project.builtWith.join(" · ")}
-                </p>
+                <ProjectCard project={project} headingLevel="h4" />
               </li>
             ))}
           </ul>
