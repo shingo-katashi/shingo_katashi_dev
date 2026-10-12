@@ -57,9 +57,11 @@ export function AboutSection() {
           {site.resumeAvailable ? (
             <a
               href={site.resumePath}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium text-slate-200 ring-1 ring-slate-600 transition hover:bg-slate-800/60"
             >
-              Download résumé
+              View résumé
             </a>
           ) : (
             <span

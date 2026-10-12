@@ -14,8 +14,7 @@ export const site = {
   github: "https://github.com/shingo-katashi",
   companyUrl: "https://www.scalyx.ai/",
   openTo: "Open to remote or hybrid opportunities",
-  /** Set to true after adding public/resume.pdf */
-  resumeAvailable: false,
+  resumeAvailable: true,
   resumePath: "/resume.pdf",
 };
 
@@ -123,29 +122,9 @@ export const experience: ExperienceItem[] = [
     imageAlt: "Seidat sales and presentation platform for hospitality",
   },
   {
-    title: "Technical Lead & Full-Stack Engineer",
-    company: "AmericaBuild Technology",
-    period: "2019 — 2022",
-    url: "http://www.americabuildtechnology.com",
-    bullets: [
-      "Built and maintained scalable B2B infrastructure as the primary engineer for permit-management organizations.",
-      "Developed a feature-rich admin panel with D3.js analytics alongside a WordPress marketing site for content updates.",
-    ],
-    technologies: [
-      "Java",
-      "Spring",
-      "PostgreSQL",
-      "Angular",
-      "Docker",
-      "WordPress",
-    ],
-    image: "/images/work/americabuild.png",
-    imageAlt: "America Build AI-powered permitting and plan review platform",
-  },
-  {
     title: "Director of Technology",
     company: "United Hardscapes Inc",
-    period: "2018 — 2020",
+    period: "2020 — 2022",
     url: "https://jdlandscaping.net/",
     bullets: [
       "Owned technology strategy and delivery: marketplace, company sites, and internal admin for hardscaping operations.",
@@ -164,17 +143,24 @@ export const experience: ExperienceItem[] = [
     imageAlt: "J&D Landscaping hardscape services website",
   },
   {
-    title: "Lead Developer",
-    company: "Intelico",
-    period: "2016 — 2018",
-    url: "https://www.intelico.com",
+    title: "Technical Lead & Full-Stack Engineer",
+    company: "AmericaBuild Technology",
+    period: "2019 — 2020",
+    url: "http://www.americabuildtechnology.com",
     bullets: [
-      "Designed service-oriented architecture adopted across the company; created Intelico One, the security asset management admin product.",
-      "Grew the engineering team from 0 to 5 and coordinated delivery with offshore contributors on products such as ForecourtEye.",
+      "Built and maintained scalable B2B infrastructure as the primary engineer for permit-management organizations.",
+      "Developed a feature-rich admin panel with D3.js analytics alongside a WordPress marketing site for content updates.",
     ],
-    technologies: ["C#", "ASP.NET", "Angular", "Azure", "SQL Server"],
-    image: "/images/work/intelico.png",
-    imageAlt: "Intelico security and asset management platform",
+    technologies: [
+      "Java",
+      "Spring",
+      "PostgreSQL",
+      "Angular",
+      "Docker",
+      "WordPress",
+    ],
+    image: "/images/work/americabuild.png",
+    imageAlt: "America Build AI-powered permitting and plan review platform",
   },
 ];
 
@@ -359,7 +345,7 @@ export const skillGroups = [
     ],
   },
   {
-    label: "Also experienced",
+    label: "Web3 & blockchain",
     skills: ["Solidity", "Smart contracts", "NFT marketplaces", "Web3.js"],
   },
 ];
