@@ -1,5 +1,10 @@
+/** Production site URL (Vercel). Override with NEXT_PUBLIC_SITE_URL if needed. */
+export const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://shingo-katashi.vercel.app";
+
 export const site = {
   name: "Shingo Katashi",
+  url: siteUrl,
   title: "Full-Stack & AI Developer",
   tagline:
     "End-to-end product engineering: scalable systems and pragmatic AI that ships.",
@@ -129,20 +134,10 @@ export const experience: ExperienceItem[] = [
     ],
   },
   {
-    title: "Lead Developer",
-    company: "Intelico",
-    period: "2016 — 2021",
-    url: "https://www.intelico.com",
-    bullets: [
-      "Designed service-oriented architecture adopted across the company; created Intelico One, the security asset management admin product.",
-      "Grew the engineering team from 0 to 5 and coordinated delivery with offshore contributors on products such as ForecourtEye.",
-    ],
-    technologies: ["C#", "ASP.NET", "Angular", "Azure", "SQL Server"],
-  },
-  {
     title: "Director of Technology",
     company: "United Hardscapes Inc",
     period: "2018 — 2020",
+    url: "https://jdlandscaping.net/",
     bullets: [
       "Owned technology strategy and delivery: marketplace, company sites, and internal admin for hardscaping operations.",
       "Led integrations and acted as the main technical contact for clients and business stakeholders.",
@@ -158,15 +153,15 @@ export const experience: ExperienceItem[] = [
     ],
   },
   {
-    title: "Frontend Lead Engineer",
-    company: "SKAEL",
-    period: "2016 — 2019",
-    url: "https://skael.com",
+    title: "Lead Developer",
+    company: "Intelico",
+    period: "2016 — 2018",
+    url: "https://www.intelico.com",
     bullets: [
-      "Built core UI for a large-scale data pipeline (billions of records) and internal admin tooling.",
-      "Delivered Babelfish, a real-time team communication product with video conferencing and ML/AI integrations.",
+      "Designed service-oriented architecture adopted across the company; created Intelico One, the security asset management admin product.",
+      "Grew the engineering team from 0 to 5 and coordinated delivery with offshore contributors on products such as ForecourtEye.",
     ],
-    technologies: ["Angular", "TypeScript", "Node.js", "Go", "PostgreSQL"],
+    technologies: ["C#", "ASP.NET", "Angular", "Azure", "SQL Server"],
   },
 ];
 
@@ -175,6 +170,8 @@ export type ProjectItem = {
   description: string;
   url?: string;
   github?: string;
+  /** When true, show "Private project" instead of a public Source link. */
+  sourcePrivate?: boolean;
   builtWith: string[];
   highlight?: boolean;
 };
@@ -209,7 +206,7 @@ export const projects: ProjectItem[] = [
     name: "Telegram Web",
     description:
       "Web control plane for large-scale Telegram operations—manage hundreds of accounts from one place and run Telegram’s native capabilities through automation (messaging, sessions, and account workflows). Python backend with a Next.js management UI.",
-    github: "https://github.com/shingo-katashi/telegram_web",
+    sourcePrivate: true,
     builtWith: [
       "Python",
       "Next.js",

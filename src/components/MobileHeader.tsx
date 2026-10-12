@@ -1,7 +1,9 @@
 "use client";
 
 import { navItems, site } from "@/content/site";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+const LG_MEDIA = "(min-width: 1024px)";
 
 function MenuIcon({ open }: { open: boolean }) {
   return (
@@ -25,21 +27,78 @@ function MenuIcon({ open }: { open: boolean }) {
   );
 }
 
+function getFocusableElements(container: HTMLElement) {
+  return Array.from(
+    container.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ),
+  ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
+}
+
 export function MobileHeader() {
   const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
+
+  const closeMenu = useCallback(() => setOpen(false), []);
 
   useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
+    if (!open) {
+      document.body.style.overflow = "";
+      return;
+    }
+
     document.body.style.overflow = "hidden";
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeMenu();
+    };
+
+    const mq = window.matchMedia(LG_MEDIA);
+    const onMqChange = () => {
+      if (mq.matches) closeMenu();
+    };
+
     window.addEventListener("keydown", onKey);
+    mq.addEventListener("change", onMqChange);
+    if (mq.matches) closeMenu();
+
+    const focusTimer = window.setTimeout(() => {
+      closeButtonRef.current?.focus();
+    }, 0);
+
     return () => {
+      window.clearTimeout(focusTimer);
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
+      mq.removeEventListener("change", onMqChange);
     };
+  }, [open, closeMenu]);
+
+  useEffect(() => {
+    if (!open) {
+      menuButtonRef.current?.focus({ preventScroll: true });
+    }
   }, [open]);
+
+  const handlePanelKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key !== "Tab" || !panelRef.current) return;
+
+    const focusable = getFocusableElements(panelRef.current);
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
 
   return (
     <>
@@ -50,11 +109,12 @@ export function MobileHeader() {
           <a
             href="#about"
             className="truncate font-semibold text-slate-100"
-            onClick={() => setOpen(false)}
+            onClick={closeMenu}
           >
             {site.name}
           </a>
           <button
+            ref={menuButtonRef}
             type="button"
             className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-300 ring-1 ring-slate-700/80 transition hover:bg-slate-800/80 hover:text-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400"
             onClick={() => setOpen((v) => !v)}
@@ -73,21 +133,35 @@ export function MobileHeader() {
             type="button"
             className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm"
             aria-label="Close menu"
-            onClick={() => setOpen(false)}
+            onClick={closeMenu}
           />
           <nav
+            ref={panelRef}
             id="mobile-nav-panel"
-            className="absolute right-0 top-0 flex h-full w-[min(100%,20rem)] flex-col border-l border-slate-800 bg-slate-950 px-6 py-8 shadow-2xl"
+            role="dialog"
+            aria-modal="true"
             aria-label="Mobile navigation"
+            className="absolute right-0 top-0 flex h-full w-[min(85vw,20rem)] max-w-xs flex-col border-l border-slate-800 bg-slate-950 px-6 py-6 shadow-2xl"
+            onKeyDown={handlePanelKeyDown}
           >
-            <p className="font-mono text-xs text-slate-500">Navigate</p>
+            <div className="flex items-center justify-between gap-4">
+              <p className="font-mono text-xs text-slate-500">Navigate</p>
+              <button
+                ref={closeButtonRef}
+                type="button"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-slate-300 ring-1 ring-slate-700 transition hover:bg-slate-800 hover:text-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400"
+                onClick={closeMenu}
+              >
+                Close
+              </button>
+            </div>
             <ul className="mt-6 flex flex-col gap-1">
               {navItems.map((item) => (
                 <li key={item.id}>
                   <a
                     href={`#${item.id}`}
                     className="block rounded-lg px-3 py-3 text-base font-medium text-slate-200 transition hover:bg-slate-800/80 hover:text-teal-300"
-                    onClick={() => setOpen(false)}
+                    onClick={closeMenu}
                   >
                     {item.label}
                   </a>
@@ -98,7 +172,7 @@ export function MobileHeader() {
               <a
                 href={`mailto:${site.email}`}
                 className="block text-slate-400 hover:text-teal-300"
-                onClick={() => setOpen(false)}
+                onClick={closeMenu}
               >
                 Email
               </a>

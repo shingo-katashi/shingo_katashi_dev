@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { site, siteUrl } from "@/content/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,19 +13,44 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const description =
+  "Full-stack and AI engineer in Tokyo. Production LLM features, e-commerce (Sophia Fiori), and open-source agents and RAG.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Shingo Katashi | Full-Stack & AI Developer",
     template: "%s | Shingo Katashi",
   },
-  description:
-    "Full-stack and AI engineer in Tokyo. Production LLM features, e-commerce (Sophia Fiori), and open-source agents and RAG.",
+  description,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Shingo Katashi | Full-Stack & AI Developer",
-    description:
-      "Full-stack engineer in Tokyo building web applications and AI-powered solutions.",
+    description,
+    url: siteUrl,
+    siteName: site.name,
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: `${site.name} — ${site.title}`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shingo Katashi | Full-Stack & AI Developer",
+    description,
+    images: ["/opengraph-image"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

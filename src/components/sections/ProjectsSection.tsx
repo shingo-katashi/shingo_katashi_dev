@@ -1,6 +1,38 @@
 import { SectionHeading } from "@/components/SectionHeading";
-import { projects, site } from "@/content/site";
+import { ProjectSourceLink } from "@/components/ProjectSourceLink";
+import { projects, site, type ProjectItem } from "@/content/site";
 import { IconExternal } from "@/components/icons";
+
+function ProjectTitle({ project }: { project: ProjectItem }) {
+  if (project.url) {
+    return (
+      <a
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-start gap-1.5 transition hover:text-teal-300"
+      >
+        {project.name}
+        <IconExternal className="mt-1 h-4 w-4 shrink-0 opacity-50 group-hover:opacity-100" />
+      </a>
+    );
+  }
+
+  if (project.github && !project.sourcePrivate) {
+    return (
+      <a
+        href={project.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="transition hover:text-teal-300"
+      >
+        {project.name}
+      </a>
+    );
+  }
+
+  return <>{project.name}</>;
+}
 
 export function ProjectsSection() {
   const featured = projects.filter((p) => p.highlight);
@@ -23,30 +55,9 @@ export function ProjectsSection() {
           >
             <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
               <h3 className="text-base font-semibold text-slate-100 sm:text-lg">
-                {project.url ? (
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-start gap-1.5 transition hover:text-teal-300"
-                  >
-                    {project.name}
-                    <IconExternal className="mt-1 h-4 w-4 shrink-0 opacity-50 group-hover:opacity-100" />
-                  </a>
-                ) : (
-                  project.name
-                )}
+                <ProjectTitle project={project} />
               </h3>
-              {project.github ? (
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="shrink-0 font-mono text-xs text-slate-500 transition hover:text-teal-400"
-                >
-                  Source ↗
-                </a>
-              ) : null}
+              <ProjectSourceLink project={project} />
             </div>
             <p className="mt-3 text-sm leading-relaxed text-slate-400 sm:text-[0.9375rem]">
               {project.description}
@@ -64,21 +75,16 @@ export function ProjectsSection() {
           </h3>
           <ul className="mt-6 space-y-6">
             {other.map((project) => (
-              <li key={project.name} className="border-t border-slate-800/80 pt-6 first:border-0 first:pt-0">
-                <h4 className="font-medium text-slate-200">
-                  {project.url ? (
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-teal-300"
-                    >
-                      {project.name}
-                    </a>
-                  ) : (
-                    project.name
-                  )}
-                </h4>
+              <li
+                key={project.name}
+                className="group border-t border-slate-800/80 pt-6 first:border-0 first:pt-0"
+              >
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                  <h4 className="font-medium text-slate-200">
+                    <ProjectTitle project={project} />
+                  </h4>
+                  <ProjectSourceLink project={project} />
+                </div>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">
                   {project.description}
                 </p>
