@@ -35,13 +35,26 @@ function getFocusableElements(container: HTMLElement) {
   ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
 }
 
+function isLgViewport() {
+  return window.matchMedia(LG_MEDIA).matches;
+}
+
 export function MobileHeader() {
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLElement>(null);
+  const wasOpenRef = useRef(false);
 
   const closeMenu = useCallback(() => setOpen(false), []);
+
+  const toggleMenu = useCallback(() => {
+    setOpen((v) => {
+      if (v) return false;
+      if (isLgViewport()) return false;
+      return true;
+    });
+  }, []);
 
   useEffect(() => {
     if (!open) {
@@ -62,7 +75,6 @@ export function MobileHeader() {
 
     window.addEventListener("keydown", onKey);
     mq.addEventListener("change", onMqChange);
-    if (mq.matches) closeMenu();
 
     const focusTimer = window.setTimeout(() => {
       closeButtonRef.current?.focus();
@@ -77,9 +89,13 @@ export function MobileHeader() {
   }, [open, closeMenu]);
 
   useEffect(() => {
-    if (!open) {
-      menuButtonRef.current?.focus({ preventScroll: true });
+    if (open) {
+      wasOpenRef.current = true;
+      return;
     }
+    if (!wasOpenRef.current) return;
+    wasOpenRef.current = false;
+    menuButtonRef.current?.focus({ preventScroll: true });
   }, [open]);
 
   const handlePanelKeyDown = (e: React.KeyboardEvent) => {
@@ -117,7 +133,7 @@ export function MobileHeader() {
             ref={menuButtonRef}
             type="button"
             className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-300 ring-1 ring-slate-700/80 transition hover:bg-slate-800/80 hover:text-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400"
-            onClick={() => setOpen((v) => !v)}
+            onClick={toggleMenu}
             aria-expanded={open}
             aria-controls="mobile-nav-panel"
             aria-label={open ? "Close menu" : "Open menu"}
